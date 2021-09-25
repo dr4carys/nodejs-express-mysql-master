@@ -43,8 +43,10 @@ Customer.create = (newCustomer, result) => {
   });
 };
 
-Customer.findById = (customerId, result) => {
-  sql.query(`SELECT * FROM customer WHERE id_cust= ${customerId}`, (err, res) => {
+Customer.role = (username, result) => {
+  sql.query(
+    "SELECT rl.name_role FROM role rl,users usr WHERE rl.id_role = usr.role AND username = ?",
+    [username] , (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -56,7 +58,6 @@ Customer.findById = (customerId, result) => {
       result(null, res[0]);
       return;
     }
-
     // not found Customer with the id
     result({ kind: "not_found" }, null);
   });
