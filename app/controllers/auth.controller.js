@@ -1,6 +1,7 @@
 const db = require("../models/customer.model");
 const config = require("../config/auth.config");
 
+
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
@@ -20,7 +21,7 @@ exports.signin = (req, res) => {
             }
         
           }
-        console.log(data)
+    
         if(data.password_user != req.body.password){
             return res.status(401).send({
                 accessToken: null,
@@ -31,7 +32,7 @@ exports.signin = (req, res) => {
         var token = jwt.sign({ id: data.id_user }, config.secret, {
             expiresIn: 86400 // 24 hours
         });
-     
+        
           db.role(req.body.username,(err,data)=>{
               if(err){
                 if (err.kind === "not_found") {
@@ -39,16 +40,24 @@ exports.signin = (req, res) => {
                         message: "required admin role "
                     });
                 } else {
-                    res.status(500).send({
-                        message: "Error "
+                    res.send({
+                        status_code: 400,
+                        message:"gagal",
+                        data: {
+                            
+                        }
                     });
                 }
-              }else  res.status(200).send({
-                id: data.id_user,
-                username: data.username,
-                email: data.email,
-                roles: data.role,
-                accessToken: token
+              }else res.status(200).send({
+                    status_code: 200,
+                    message:"berhasil",
+                    data: {
+                        id: data.id_user,
+                        username: data.username,
+                        email: data.email,
+                        roles: data.role,
+                        access_token:token
+                    }
               });
           });
     });

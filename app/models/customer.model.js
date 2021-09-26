@@ -46,7 +46,7 @@ Customer.create = (newCustomer, result) => {
 
 Customer.role = (username, result) => {
   sql.query(
-    "SELECT rl.name_role FROM role rl,users usr WHERE rl.id_role = usr.role AND username = ?",
+    "SELECT * FROM role rl,users usr WHERE rl.id_role = usr.role AND username = ?",
     [username] , (err, res) => {
     if (err) {
       console.log("error: ", err);
