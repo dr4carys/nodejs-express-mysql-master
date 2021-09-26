@@ -6,6 +6,7 @@ var bcrypt = require("bcryptjs");
 
 
 exports.signin = (req, res) => {
+    console.log("cool",req.body.username)
     db.findByUsername(req.body.username,(err,data) =>{
         if(err){
             if (err.kind === "not_found") {
@@ -19,7 +20,8 @@ exports.signin = (req, res) => {
             }
         
           }
-        if(data.password_user != req.body.password_user){
+        console.log(data)
+        if(data.password_user != req.body.password){
             return res.status(401).send({
                 accessToken: null,
                 message: "Invalid Password!"

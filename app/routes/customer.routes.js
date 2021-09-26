@@ -1,11 +1,20 @@
+const { authJwt } = require("../middleware");
+const customers = require("../controllers/customer.controller.js");
 module.exports = app => {
-  const customers = require("../controllers/customer.controller.js");
-
+  
+  
+  app.use(function(req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
   // Create a new Customer
   app.post("/customers", customers.create);
 
   // Retrieve all Customers
-  app.get("/customers", customers.findAll);
+  app.get("/customers", [authJwt.verifyToken],customers.findAll);
   // app.get("/ambildata/:userId",user.findOne);
 
   // Retrieve a single Customer with customerId

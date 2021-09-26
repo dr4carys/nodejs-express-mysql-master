@@ -8,6 +8,7 @@ const Customer = function(customer) {
 };
 
 Customer.findByUsername = (username,result)  =>{
+  console.log("ssss",username)
   sql.query(
     "SELECT * FROM users WHERE username = ?",
     [username],
@@ -18,12 +19,12 @@ Customer.findByUsername = (username,result)  =>{
         return;
       }
 
-      if (res.affectedRows == 0) {
+      if (res.length == 0) {
         // not found Customer with the id
         result({ kind: "not_found" }, null);
         return;
       }
-      console.log(res)
+      console.log("ss",res)
       result(null, res[0]);
     }
   );
