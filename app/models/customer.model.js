@@ -2,7 +2,7 @@ const sql = require("./db.js");
 
 // constructor
 const Customer = function(customer) {
-  this.email = customer.email;
+  this.pathimage = cust;
   this.name = customer.name;
   this.active = customer.active;
 };
@@ -65,13 +65,13 @@ Customer.role = (username, result) => {
 };
 
 Customer.getAll = result => {
-  sql.query("SELECT * FROM customer", (err, res) => {
+  sql.query("SELECT * FROM data_ip dat, users us ,role rol WHERE dat.`id_user`= us.`id_user` AND rol.`id_role`= us.`role`", 
+  (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
-
     console.log("customers: ", res);
     result(null, res);
   });
